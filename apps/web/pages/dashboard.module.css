@@ -1,188 +1,211 @@
-.page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-synthesis: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
-}
-
-.main {
+/* Container and layout */
+.container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  background: linear-gradient(180deg, #f97316 0%, #fbbf2f 100%);
 }
 
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
+/* Header styles */
+.header {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 1rem 0;
+}
+
+.headerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a2b4b;
   margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
+/* Main content area */
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
 }
 
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.cardHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cardTitle {
+  font-size: 2rem;
   font-weight: 600;
+  color: #1a2b4b;
+  margin-bottom: 1rem;
 }
 
-.ctas {
-  display: flex;
-  gap: 16px;
+.cardSubtitle {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-bottom: 2rem;
 }
 
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  font-family: var(--font-geist-sans);
-  border: 1px solid transparent;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-  cursor: pointer;
-  display: flex;
+/* Buttons */
+.button {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
   font-weight: 500;
-}
-
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 180px;
-}
-
-button.secondary {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  font-family: var(--font-geist-sans);
-  border: 1px solid transparent;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  font-size: 1rem;
+}
+
+.primaryButton {
+  composes: button;
+  background: #f97316;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+.primaryButton:hover {
+  background: #f97316;
+  transform: translateY(-1px);
+}
+
+.outlineButton {
+  composes: button;
   background: transparent;
-  border-color: var(--gray-alpha-200);
-  min-width: 180px;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
 }
 
+.outlineButton:hover {
+  background: #f8fafc;
+  color: #1a2b4b;
+}
+
+.buttonIcon {
+  margin-right: 0.5rem;
+  width: 20px;
+  height: 20px;
+}
+
+/* Feature grid */
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+  .featureGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.featureCard {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+}
+
+.featureIcon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 1rem;
+  color: #f97316;
+}
+
+.featureTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a2b4b;
+  margin-bottom: 0.5rem;
+}
+
+.featureText {
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Footer */
 .footer {
-  font-family: var(--font-geist-sans);
-  grid-row-start: 3;
-  display: flex;
-  gap: 24px;
+  background-color: white;
+  border-top: 1px solid #e2e8f0;
+  padding: 1.5rem 0;
+  margin-top: auto;
 }
 
-.footer a {
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+  color: #64748b;
+}
+
+/* Loading spinner */
+.loadingContainer {
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
 }
 
-.footer img {
-  flex-shrink: 0;
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-@media (max-width: 600px) {
-  .page {
-    padding: 32px;
-    padding-bottom: 80px;
-  }
-
-  .main {
-    align-items: center;
-  }
-
-  .main ol {
-    text-align: center;
-  }
-
-  .ctas {
-    flex-direction: column;
-  }
-
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
-  }
-
-  a.secondary {
-    min-width: auto;
-  }
-
-  .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
+/* Button container */
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
+/* Utility classes */
+.textCenter {
+  text-align: center;
+}
+
+.mb1 {
+  margin-bottom: 1rem;
+}
+
+.mb2 {
+  margin-bottom: 2rem;
 }
