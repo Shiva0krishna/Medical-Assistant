@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../../packages/ui/src/firebase";
 import axios from 'axios';
-import './chatpage.css'
- 
-const ChatPage: React.FC = () => {
-  const [messages, setMessages] = useState<{ text: string, from: string }[]>([]);  
-  const [userInput, setUserInput] = useState<string>('');  
+import './chatpage.css';
 
+const ChatPage: React.FC = () => {
+  const [messages, setMessages] = useState<{ text: string, from: string }[]>([]);
+  const [userInput, setUserInput] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
-        // User is signed in, proceed to dashboard
-        setLoading(false);
+        setLoading(false);  // User is signed in, stop loading
       } else {
-        // No user, redirect to sign-in page
-        setLoading(false);
-        router.push("/"); // Make sure to stop loading here as well
+        setLoading(false);  // No user, stop loading and redirect to sign-in page
+        router.push("/"); 
       }
     });
 
@@ -33,18 +29,21 @@ const ChatPage: React.FC = () => {
   }
 
   const handleSendMessage = async () => {
-    if (!userInput.trim()) return;  
-    setMessages([...messages, { text: userInput, from: 'user' }]);
-    setUserInput('');  
+    if (!userInput.trim()) return;  // Don't send empty messages
 
-    setLoading(true);  
+    // Add the user message to the chat
+    setMessages([...messages, { text: userInput, from: 'user' }]);
+    setUserInput('');  // Clear input field
+
+    setLoading(true);  // Show loading state while waiting for response
 
     try {
-       const response = await axios.post('http://localhost:3001/api/chat', { message: userInput });
+      const response = await axios.post('http://localhost:3001/api/chat', { message: userInput });
+      console.log('Response from backend:', response);  // Log the response to check its structure
 
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: response.data.reply, from: 'bot' }
+        { text: response.data.reply || 'I could not understand. Please try again.', from: 'bot' }  // Handle missing reply
       ]);
     } catch (error) {
       console.error('Error while sending message:', error);
@@ -53,7 +52,7 @@ const ChatPage: React.FC = () => {
         { text: 'Sorry, there was an error. Please try again.', from: 'bot' }
       ]);
     } finally {
-      setLoading(false); 
+      setLoading(false);  // Hide loading state after response is received
     }
   };
 
@@ -72,7 +71,7 @@ const ChatPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Input and button */}
+        {/* Input and send button */}
         <div className="input-container">
           <input
             type="text"
